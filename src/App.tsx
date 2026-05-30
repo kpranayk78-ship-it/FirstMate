@@ -29,7 +29,9 @@ interface ChatSession {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('copilot'); // Make AI Copilot active by default
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem('firstmate_active_tab') || 'copilot';
+  }); // Make AI Copilot active by default
   const [searchQuery, setSearchQuery] = useState('');
   const [initialChatQuery, setInitialChatQuery] = useState('');
   const [duplicateIssues, setDuplicateIssues] = useState<any[]>([]);
@@ -44,8 +46,19 @@ export default function App() {
   const [loadingPRs, setLoadingPRs] = useState(false);
   const [errorPRs, setErrorPRs] = useState<string | null>(null);
   const [shouldRefreshPRs, setShouldRefreshPRs] = useState(false);
-  const [repoOwner, setRepoOwner] = useState('flutter');
-  const [repoName, setRepoName] = useState('flutter');
+  const [prSubTab, setPrSubTab] = useState<'tracker' | 'prs'>(() => {
+    return (localStorage.getItem('firstmate_pr_subtab') as 'tracker' | 'prs') || 'tracker';
+  });
+  const [trackerData, setTrackerData] = useState<any[]>([]);
+  const [loadingTracker, setLoadingTracker] = useState(false);
+  const [errorTracker, setErrorTracker] = useState<string | null>(null);
+  const [shouldRefreshTracker, setShouldRefreshTracker] = useState(false);
+  const [repoOwner, setRepoOwner] = useState(() => {
+    return localStorage.getItem('firstmate_repo_owner') || 'flutter';
+  });
+  const [repoName, setRepoName] = useState(() => {
+    return localStorage.getItem('firstmate_repo_name') || 'flutter';
+  });
   const [cliLogs, setCliLogs] = useState('');
 
   // Lifted Chat Sessions state
@@ -72,6 +85,20 @@ export default function App() {
       }
     }
   }, [activeSessionId, sessions]);
+
+  // Persist current tab, subtab, owner, and repo across reloads
+  useEffect(() => {
+    localStorage.setItem('firstmate_active_tab', activeTab);
+  }, [activeTab]);
+
+  useEffect(() => {
+    localStorage.setItem('firstmate_pr_subtab', prSubTab);
+  }, [prSubTab]);
+
+  useEffect(() => {
+    localStorage.setItem('firstmate_repo_owner', repoOwner);
+    localStorage.setItem('firstmate_repo_name', repoName);
+  }, [repoOwner, repoName]);
 
   // Functional Updaters to avoid stale async closures
   const addSession = (newSession: ChatSession) => {
@@ -270,7 +297,7 @@ export default function App() {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ owner: repoOwner, repo: repoName })
+            body: JSON.stringify({ owner: repoOwner, repo: repoName, refresh: shouldRefreshPRs })
           });
           const data = await response.json();
           if (!isCancelled && data.success) {
@@ -297,6 +324,46 @@ export default function App() {
       };
     }
   }, [activeTab, repoOwner, repoName, shouldRefreshPRs]);
+
+  useEffect(() => {
+    if (activeTab === 'pr_status') {
+      let isCancelled = false;
+      const fetchTracker = async () => {
+        setLoadingTracker(true);
+        setErrorTracker(null);
+        try {
+          const response = await fetch('http://localhost:3001/issues/pr-tracker', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ owner: repoOwner, repo: repoName, refresh: shouldRefreshTracker })
+          });
+          const data = await response.json();
+          if (!isCancelled && data.success) {
+            setTrackerData(data.tracker || []);
+          } else if (!isCancelled) {
+            setErrorTracker(data.error || 'Failed to fetch PR tracking status');
+          }
+        } catch (err: any) {
+          if (!isCancelled) {
+            setErrorTracker(err.message || 'An error occurred while fetching PR tracking status');
+          }
+        } finally {
+          if (!isCancelled) {
+            setLoadingTracker(false);
+            if (shouldRefreshTracker) {
+              setShouldRefreshTracker(false);
+            }
+          }
+        }
+      };
+      fetchTracker();
+      return () => {
+        isCancelled = true;
+      };
+    }
+  }, [activeTab, prSubTab, repoOwner, repoName, shouldRefreshTracker]);
 
   return (
     <div className="w-full h-screen bg-[#0d1117] text-[#c9d1d9] flex font-sans selection:bg-[#388bfd]/30 selection:text-white">
@@ -860,91 +927,225 @@ export default function App() {
 
               {activeTab === 'pr_status' && (
                 <div className="space-y-4">
-                  <div className="bg-[#161b22] border border-[#30363d] rounded-t-md p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <GitPullRequest className="w-5 h-5 text-[#58a6ff]" />
-                      <div>
-                        <span className="font-semibold text-white">Open Pull Requests</span>
-                        <p className="text-[11px] text-[#8b949e] mt-0.5">
-                          List of all active and pending pull requests retrieved from local Coral database
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button 
-                        onClick={() => setShouldRefreshPRs(true)}
-                        disabled={loadingPRs}
-                        className="text-[10px] bg-[#21262d] border border-[#30363d] text-[#c9d1d9] hover:bg-[#30363d] hover:border-[#8b949e] px-2.5 py-1.5 rounded-md font-semibold flex items-center gap-1.5 shadow-sm transition-all disabled:opacity-50 select-none cursor-pointer"
-                      >
-                        <RefreshCw className={`w-3.5 h-3.5 ${loadingPRs ? 'animate-spin' : ''}`} />
-                        Sync Pull Requests
-                      </button>
-                      <span className="text-xs bg-[#161b22] border border-[#30363d] text-[#c9d1d9] px-2.5 py-1.5 rounded-md font-semibold">
-                        {loadingPRs ? '...' : pullRequests.length} Open Pull Requests
-                      </span>
-                    </div>
+                  {/* Premium Segmented Controls / Sub-Tabs */}
+                  <div className="flex border-b border-[#30363d] gap-2 pb-px mb-2">
+                    <button
+                      onClick={() => setPrSubTab('tracker')}
+                      className={`pb-3 px-4 font-semibold text-sm transition-all border-b-2 hover:text-white select-none cursor-pointer ${
+                        prSubTab === 'tracker'
+                          ? 'border-[#58a6ff] text-white'
+                          : 'border-transparent text-[#8b949e]'
+                      }`}
+                    >
+                      PR Status Tracker
+                    </button>
+                    <button
+                      onClick={() => setPrSubTab('prs')}
+                      className={`pb-3 px-4 font-semibold text-sm transition-all border-b-2 hover:text-white select-none cursor-pointer ${
+                        prSubTab === 'prs'
+                          ? 'border-[#58a6ff] text-white'
+                          : 'border-transparent text-[#8b949e]'
+                      }`}
+                    >
+                      Open Pull Requests
+                    </button>
                   </div>
-                  
-                  {loadingPRs ? (
-                    <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-8 flex flex-col items-center justify-center gap-3">
-                      <CircleDashed className="w-8 h-8 text-[#58a6ff] animate-spin" />
-                      <span className="text-xs text-[#8b949e] font-medium">Fetching open pull requests...</span>
-                    </div>
-                  ) : errorPRs ? (
-                    <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-6 text-center text-[#f85149] text-xs">
-                      {errorPRs}
-                    </div>
-                  ) : pullRequests.length === 0 ? (
-                    <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-12 text-center text-xs text-[#8b949e]">
-                      No open pull requests found in this repository.
-                    </div>
-                  ) : (
-                    <div className="bg-[#0d1117] border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-2 space-y-1">
-                      {pullRequests.map((pr, idx) => {
-                        const daysOld = Math.max(0, Math.floor((Date.now() - new Date(pr.created_at).getTime()) / (1000 * 60 * 60 * 24)));
-                        let labelText = "Active";
-                        let labelColor = "text-[#238636] border-[#238636]";
 
-                        if (daysOld >= 14) {
-                          labelText = `Stalled (${daysOld}d+)`;
-                          labelColor = "text-[#f85149] border-[#f85149]";
-                        } else if (daysOld >= 7) {
-                          labelText = "Needs Review";
-                          labelColor = "text-[#d29922] border-[#d29922]";
-                        }
-
-                        return (
-                          <div key={idx} className="p-3 flex gap-3 hover:bg-[#1c2128] hover:shadow-lg hover:-translate-y-0.5 transform rounded-md transition-all duration-200 border border-transparent hover:border-[#424a53]">
-                            <div className="mt-1">
-                              <GitPullRequest className="w-5 h-5 text-[#238636]" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-1 cursor-pointer">
-                                <h3 className="text-white font-semibold text-base hover:text-[#58a6ff] transition-colors">{pr.title}</h3>
-                                <span className={`px-2 py-0.5 rounded-full border text-[10px] font-semibold tracking-wide uppercase ${labelColor}`}>
-                                  {labelText}
-                                </span>
-                              </div>
-                              <div className="text-xs text-[#8b949e] flex items-center gap-2 mt-1">
-                                <span className="text-[10px] bg-[#238636]/15 border border-[#2ea043]/30 text-[#3fb950] px-1.5 py-0.5 rounded font-mono font-semibold">
-                                  #{pr.number}
-                                </span>
-                                <span>opened by <strong className="text-[#c9d1d9]">{pr.user__login}</strong> {daysOld} days ago</span>
-                              </div>
-                            </div>
-                            <div className="flex items-start shrink-0">
-                               <a 
-                                 href={pr.html_url}
-                                 target="_blank"
-                                 rel="noopener noreferrer"
-                                 className="px-3 py-1.5 bg-[#21262d] border border-[#30363d] text-[#c9d1d9] text-xs font-semibold rounded-md hover:bg-[#30363d] hover:border-[#8b949e] transition-all flex items-center gap-1"
-                               >
-                                 View PR
-                               </a>
-                            </div>
+                  {prSubTab === 'tracker' && (
+                    <div className="space-y-4">
+                      <div className="bg-[#161b22] border border-[#30363d] rounded-t-md p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <Network className="w-5 h-5 text-[#58a6ff]" />
+                          <div>
+                            <span className="font-semibold text-white">PR Status Tracker</span>
+                            <p className="text-[11px] text-[#8b949e] mt-0.5">
+                              Track issue progress: see which issues are actively being worked on, stalled, or abandoned
+                            </p>
                           </div>
-                        );
-                      })}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button 
+                            onClick={() => setShouldRefreshTracker(true)}
+                            disabled={loadingTracker}
+                            className="text-[10px] bg-[#21262d] border border-[#30363d] text-[#c9d1d9] hover:bg-[#30363d] hover:border-[#8b949e] px-2.5 py-1.5 rounded-md font-semibold flex items-center gap-1.5 shadow-sm transition-all disabled:opacity-50 select-none cursor-pointer"
+                          >
+                            <RefreshCw className={`w-3.5 h-3.5 ${loadingTracker ? 'animate-spin' : ''}`} />
+                            Sync Tracker
+                          </button>
+                          <span className="text-xs bg-[#161b22] border border-[#30363d] text-[#c9d1d9] px-2.5 py-1.5 rounded-md font-semibold">
+                            {loadingTracker ? '...' : trackerData.length} Issues Tracked
+                          </span>
+                        </div>
+                      </div>
+
+                      {loadingTracker ? (
+                        <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-8 flex flex-col items-center justify-center gap-3">
+                          <CircleDashed className="w-8 h-8 text-[#58a6ff] animate-spin" />
+                          <span className="text-xs text-[#8b949e] font-medium">Analyzing issue tracking status...</span>
+                        </div>
+                      ) : errorTracker ? (
+                        <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-6 text-center text-[#f85149] text-xs">
+                          {errorTracker}
+                        </div>
+                      ) : trackerData.length === 0 ? (
+                        <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-12 text-center text-xs text-[#8b949e]">
+                          No tracked issues found in this repository.
+                        </div>
+                      ) : (
+                        <div className="bg-[#0d1117] border border-t-0 border-[#30363d] rounded-b-md -mt-4 overflow-hidden">
+                          <div className="overflow-x-auto">
+                            <table className="w-full border-collapse text-left text-xs table-fixed">
+                              <thead>
+                                <tr className="border-b border-[#30363d] bg-[#161b22] text-[#8b949e]">
+                                  <th className="py-2.5 px-4 font-bold uppercase tracking-wider text-[10px] w-24">Issue</th>
+                                  <th className="py-2.5 px-4 font-bold uppercase tracking-wider text-[10px] w-1/2">Title</th>
+                                  <th className="py-2.5 px-4 font-bold uppercase tracking-wider text-[10px] w-48">Status</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-[#30363d]">
+                                {trackerData.map((item, idx) => {
+                                  let statusBadgeColor = "bg-[#21262d] border-[#30363d] text-[#c9d1d9]";
+                                  
+                                  if (item.status.startsWith("Has PR")) {
+                                    statusBadgeColor = "bg-[#238636]/15 border-[#2ea043]/30 text-[#3fb950]";
+                                  } else if (item.status === "Stalled") {
+                                    statusBadgeColor = "bg-[#d29922]/15 border-[#d29922]/30 text-[#d29922]";
+                                  } else if (item.status === "Abandoned") {
+                                    statusBadgeColor = "bg-[#f85149]/15 border-[#f85149]/30 text-[#f85149]";
+                                  } else if (item.status === "Active") {
+                                    statusBadgeColor = "bg-[#58a6ff]/15 border-[#388bfd]/30 text-[#58a6ff]";
+                                  }
+
+                                  return (
+                                    <tr key={idx} className="hover:bg-[#161b22]/50 transition-colors">
+                                      <td className="py-3 px-4 font-semibold text-[#8b949e]">
+                                        #{item.number}
+                                      </td>
+                                      <td className="py-3 px-4 font-medium text-white">
+                                        <div className="font-semibold text-white truncate">{item.title}</div>
+                                        {item.analysis && (
+                                          <div className="text-[10px] text-[#8b949e] font-normal mt-1 leading-relaxed max-w-xl">
+                                            {item.analysis}
+                                          </div>
+                                        )}
+                                      </td>
+                                      <td className="py-3 px-4">
+                                        {item.prUrl ? (
+                                          <a 
+                                            href={item.prUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded border text-[10px] font-semibold tracking-wide uppercase transition-all hover:bg-[#30363d] ${statusBadgeColor}`}
+                                          >
+                                            {item.status}
+                                            <ExternalLink className="w-3 h-3" />
+                                          </a>
+                                        ) : (
+                                          <span className={`inline-block px-2.5 py-1 rounded border text-[10px] font-semibold tracking-wide uppercase ${statusBadgeColor}`}>
+                                            {item.status}
+                                          </span>
+                                        )}
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {prSubTab === 'prs' && (
+                    <div className="space-y-4 animate-fadeIn">
+                      <div className="bg-[#161b22] border border-[#30363d] rounded-t-md p-4 flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <GitPullRequest className="w-5 h-5 text-[#58a6ff]" />
+                          <div>
+                            <span className="font-semibold text-white">Open Pull Requests</span>
+                            <p className="text-[11px] text-[#8b949e] mt-0.5">
+                              List of all active and pending pull requests retrieved from local Coral database
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button 
+                            onClick={() => setShouldRefreshPRs(true)}
+                            disabled={loadingPRs}
+                            className="text-[10px] bg-[#21262d] border border-[#30363d] text-[#c9d1d9] hover:bg-[#30363d] hover:border-[#8b949e] px-2.5 py-1.5 rounded-md font-semibold flex items-center gap-1.5 shadow-sm transition-all disabled:opacity-50 select-none cursor-pointer"
+                          >
+                            <RefreshCw className={`w-3.5 h-3.5 ${loadingPRs ? 'animate-spin' : ''}`} />
+                            Sync Pull Requests
+                          </button>
+                          <span className="text-xs bg-[#161b22] border border-[#30363d] text-[#c9d1d9] px-2.5 py-1.5 rounded-md font-semibold">
+                            {loadingPRs ? '...' : pullRequests.length} Open Pull Requests
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {loadingPRs ? (
+                        <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-8 flex flex-col items-center justify-center gap-3">
+                          <CircleDashed className="w-8 h-8 text-[#58a6ff] animate-spin" />
+                          <span className="text-xs text-[#8b949e] font-medium">Fetching open pull requests...</span>
+                        </div>
+                      ) : errorPRs ? (
+                        <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-6 text-center text-[#f85149] text-xs">
+                          {errorPRs}
+                        </div>
+                      ) : pullRequests.length === 0 ? (
+                        <div className="bg-[#161b22]/30 border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-12 text-center text-xs text-[#8b949e]">
+                          No open pull requests found in this repository.
+                        </div>
+                      ) : (
+                        <div className="bg-[#0d1117] border border-t-0 border-[#30363d] rounded-b-md -mt-4 p-2 space-y-1">
+                          {pullRequests.map((pr, idx) => {
+                            const daysOld = Math.max(0, Math.floor((Date.now() - new Date(pr.created_at).getTime()) / (1000 * 60 * 60 * 24)));
+                            let labelText = "Active";
+                            let labelColor = "text-[#238636] border-[#238636]";
+
+                            if (daysOld >= 14) {
+                              labelText = `Stalled (${daysOld}d+)`;
+                              labelColor = "text-[#f85149] border-[#f85149]";
+                            } else if (daysOld >= 7) {
+                              labelText = "Needs Review";
+                              labelColor = "text-[#d29922] border-[#d29922]";
+                            }
+
+                            return (
+                              <div key={idx} className="p-3 flex gap-3 hover:bg-[#1c2128] hover:shadow-lg hover:-translate-y-0.5 transform rounded-md transition-all duration-200 border border-transparent hover:border-[#424a53]">
+                                <div className="mt-1">
+                                  <GitPullRequest className="w-5 h-5 text-[#238636]" />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2 mb-1 cursor-pointer">
+                                    <h3 className="text-white font-semibold text-base hover:text-[#58a6ff] transition-colors">{pr.title}</h3>
+                                    <span className={`px-2 py-0.5 rounded-full border text-[10px] font-semibold tracking-wide uppercase ${labelColor}`}>
+                                      {labelText}
+                                    </span>
+                                  </div>
+                                  <div className="text-xs text-[#8b949e] flex items-center gap-2 mt-1">
+                                    <span className="text-[10px] bg-[#238636]/15 border border-[#2ea043]/30 text-[#3fb950] px-1.5 py-0.5 rounded font-mono font-semibold">
+                                      #{pr.number}
+                                    </span>
+                                    <span>opened by <strong className="text-[#c9d1d9]">{pr.user__login}</strong> {daysOld} days ago</span>
+                                  </div>
+                                </div>
+                                <div className="flex items-start shrink-0">
+                                   <a 
+                                     href={pr.html_url}
+                                     target="_blank"
+                                     rel="noopener noreferrer"
+                                     className="px-3 py-1.5 bg-[#21262d] border border-[#30363d] text-[#c9d1d9] text-xs font-semibold rounded-md hover:bg-[#30363d] hover:border-[#8b949e] transition-all flex items-center gap-1"
+                                   >
+                                     View PR
+                                   </a>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

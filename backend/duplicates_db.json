@@ -1,378 +1,308 @@
 {
   "santifer/career-ops": {
-    "timestamp": 1780049820415,
+    "timestamp": 1780122923397,
     "data": {
-      "total_open_issues_analyzed": 78,
+      "total_open_issues_analyzed": 5,
       "open_issues": [
         {
-          "number": 280,
-          "title": "Dependency Dashboard"
-        },
-        {
-          "number": 754,
-          "title": "update-system.mjs check always returns `offline` inside Claude Code sandbox"
-        },
-        {
-          "number": 751,
-          "title": "merge-tracker: fuzzy dedupe incorrectly matches different teams sharing a product brand (e.g. UberEats Feed vs Consumer Fulfillment)"
-        },
-        {
-          "number": 727,
-          "title": "CDP Support"
-        },
-        {
-          "number": 750,
-          "title": "Apply mode has no liveness gate — unconfirmed pipeline roles generate wasted application materials"
-        },
-        {
-          "number": 749,
-          "title": "Race condition in report-number allocation across parallel interactive CLI windows"
-        },
-        {
-          "number": 747,
-          "title": "scan.mjs silently drops 25+ companies with scan_method: websearch — no surfaced list, no agent handoff"
-        },
-        {
-          "number": 748,
-          "title": "v1.8.x update breaks scanner: providers/ directory not written (ERR_MODULE_NOT_FOUND)"
-        },
-        {
-          "number": 745,
-          "title": "feat(scan): reverse-discover companies from ATS APIs instead of maintaining portals.yml manually"
-        },
-        {
-          "number": 737,
-          "title": "feat(batch): multi-CLI support for batch-runner.sh (opencode, gemini, qwen)"
-        },
-        {
-          "number": 736,
-          "title": "feat(batch): PDF generation in batch mode is expensive and unnecessary for many use cases"
-        },
-        {
-          "number": 734,
-          "title": "Feature: Filter jobs by content"
-        },
-        {
-          "number": 733,
-          "title": "update-system.mjs rollback selects oldest backup branch, not most recent"
-        },
-        {
-          "number": 732,
-          "title": "v1.8.1 update tripped by safety check on interview-prep/story-bank.md (user-layer file)"
-        },
-        {
-          "number": 730,
-          "title": "ATS: extend normalizeTextForATS to cover arrows, middots, and currency symbols"
-        },
-        {
-          "number": 266,
-          "title": "Fallback URL search for tracked companies on 410/404"
-        },
-        {
-          "number": 199,
-          "title": "Proposal: Add cover letter generation workflow"
-        },
-        {
-          "number": 101,
-          "title": "Add French documentation to README"
-        },
-        {
-          "number": 728,
-          "title": "Adding support for Antigravity CLI"
-        },
-        {
-          "number": 721,
-          "title": "merge-tracker.mjs roleFuzzyMatch still over-matches: parenthetical location qualifiers + short domain acronyms cause silent data loss"
-        },
-        {
-          "number": 720,
-          "title": "feat: Indeed Ireland scanner support"
-        },
-        {
-          "number": 714,
-          "title": "Inconsistent PDF auto-generation: batch generates for every offer, pipeline mode hardcodes score >= 3.0"
-        },
-        {
-          "number": 711,
-          "title": "batch-runner.sh never reconciles data/pipeline.md — processed offers re-surface and get re-evaluated"
-        },
-        {
-          "number": 706,
-          "title": "Add first-class OpenCode support alongside Claude Code"
-        },
-        {
-          "number": 699,
-          "title": "Application form question does not align with career-ops-apply feature"
-        },
-        {
-          "number": 698,
-          "title": "feat: add Playwright-based scanner for Interamt.de (German public sector portal)"
-        },
-        {
-          "number": 695,
-          "title": "Feature Request: Universal LaTeX-In, LaTeX-Out Pipeline"
-        },
-        {
-          "number": 690,
-          "title": "Gemini: non-UTF-8 symbols are not displayed correctly"
-        },
-        {
-          "number": 686,
-          "title": "Feature: add interview/plan, interview/practice, interview/debrief skill modes"
-        },
-        {
-          "number": 684,
-          "title": "feat: optional Docker + ttyd recipe to serve the TUI dashboard in a browser"
-        },
-        {
-          "number": 682,
-          "title": "Add CV fact validator (verify-cv-facts.mjs + config/cv-facts.example.json)"
-        },
-        {
-          "number": 675,
-          "title": "Feature: Configurable salary filtering for scanner results"
-        },
-        {
-          "number": 664,
-          "title": "feat: Microsoft Graph SDK integration — auto-detect interview invites from Outlook + Teams and sync to calendar + prep files"
-        },
-        {
-          "number": 673,
-          "title": "feat: search-tavily.mjs — Tavily search/extract as shared utility (liveness fallback + company research + job scan)"
-        },
-        {
-          "number": 669,
-          "title": "feat: notify-telegram.mjs — Telegram bot notifications for new interview invites and pipeline matches"
-        },
-        {
-          "number": 668,
-          "title": "feat: scan-notion.mjs — read job postings from Notion database into pipeline"
-        },
-        {
-          "number": 667,
-          "title": "feat: Notion Kanban dashboard — push applications tracker + interview prep to Notion"
-        },
-        {
-          "number": 660,
-          "title": "feat: Google Workspace SDK integration — auto-detect interview invites from Gmail and sync to calendar + prep files"
-        },
-        {
-          "number": 651,
-          "title": "scan.mjs: add Workable, SmartRecruiters, Recruitee ATS parsers"
-        },
-        {
-          "number": 650,
-          "title": "location_filter: optional always_allow tier (on top of allow/block filters from v1.7.1)"
-        },
-        {
-          "number": 646,
-          "title": "Jakes Resume and /add"
-        },
-        {
-          "number": 635,
-          "title": "Bug: CV section ordering may hallucinate in generated PDFs (multiple community reports)"
-        },
-        {
-          "number": 620,
-          "title": "Bug: `gemini-eval.mjs` Gemini endpoint hallucinating while generating evaluation markdown"
-        },
-        {
-          "number": 619,
-          "title": "Docs: Gemini CLI setup fails on Node.js 18"
-        },
-        {
-          "number": 540,
-          "title": "feat(ui): add Vite + React web dashboard for pipeline visualization"
-        },
-        {
-          "number": 593,
-          "title": "Feature: cold email"
-        },
-        {
-          "number": 588,
-          "title": "release-please-config: add VERSION to extra-files + include-component-in-tag: false"
-        },
-        {
-          "number": 586,
-          "title": "RFC: 4 small upstream improvements (scan location, Ashby comp, JD-shape dedup, slug validator)"
-        },
-        {
-          "number": 583,
-          "title": "Batch workers don't read modes/_profile.md (interactive modes do)"
-        },
-        {
-          "number": 575,
-          "title": "docs(CLAUDE.md): remove 4 internal duplications (saves ~947 tokens/turn, ~17%)"
-        },
-        {
-          "number": 571,
-          "title": "scan.mjs: skip postings inside declared re-apply cooldown windows"
-        },
-        {
-          "number": 574,
-          "title": "CLAUDE.md \"Offer Verification\" mandates Playwright-first, which contradicts scan.mjs zero-token JSON-API approach"
-        },
-        {
-          "number": 563,
-          "title": "/career-ops latex command missing from menus and OpenCode/Gemini command files"
-        },
-        {
-          "number": 557,
-          "title": "feat: Decrease Pipeline and PDF Token Burn Via CV Building Scripts"
-        },
-        {
-          "number": 553,
-          "title": "Feature Request: Archive Job Postings as PDF"
-        },
-        {
-          "number": 552,
-          "title": "[Feature Request] Extended Profile for better cover letters and tailoring CVs"
-        },
-        {
-          "number": 539,
-          "title": "Windows compatibility + customization-layer fixes (4 P0 bugs found in real-world hunt)"
-        },
-        {
-          "number": 533,
-          "title": "Add Workday API support to scan.mjs"
-        },
-        {
-          "number": 524,
-          "title": "Feature Request: Support for external data directory (separate user data from code)"
-        },
-        {
-          "number": 522,
-          "title": "Playwright MCP server not configured — browser tools unavailable, SPA job boards silently fail"
-        },
-        {
-          "number": 518,
-          "title": "feat: MigrateMate authenticated job board scraper"
-        },
-        {
-          "number": 505,
-          "title": "Batch Runner doesn't pause and wait for rate limit"
-        },
-        {
-          "number": 515,
-          "title": "RFC / Architectual Decision: Authenticated Portal Scanning, Storing Browser Profiles"
-        },
-        {
-          "number": 514,
-          "title": "Enable OpenAI API Integration for Career-Ops Pipeline Automation"
-        },
-        {
-          "number": 509,
-          "title": "Feature: voice-based mock interview mode (/career-ops mock)"
-        },
-        {
-          "number": 501,
-          "title": "feat: Kimi CLI integration (KIMI.md + .kimi/commands/ + kimi-eval.mjs)"
-        },
-        {
-          "number": 506,
-          "title": "Batch Runner hangs if you have Playwright MCP installed"
-        },
-        {
-          "number": 452,
-          "title": "feat: add early job trust validation in scanner (URL + source checks)"
-        },
-        {
-          "number": 363,
-          "title": "Many root-level files in the modes/ directory are in Spanish instead of English. This creates significant inconsistency in the repository's documentation language."
-        },
-        {
-          "number": 377,
-          "title": "feat: OpenClaw skill adaptations — make career-ops compatible with OpenClaw agents"
-        },
-        {
-          "number": 238,
-          "title": "Feature: Persistent portal sessions with auto-login (like linkedin-mcp-server)"
-        },
-        {
-          "number": 322,
-          "title": "Add Workday portal job application support"
-        },
-        {
-          "number": 334,
-          "title": "flake without `systems` fails with unclear devShell attribute error"
-        },
-        {
-          "number": 230,
-          "title": "🔗 Scanner & Job Board Providers (umbrella)"
-        },
-        {
-          "number": 264,
-          "title": "[Feature Request] Photo support in CV template for DACH / European job market"
-        },
-        {
-          "number": 147,
-          "title": "feat: Dashboard Data Format Migration from applications.md → applications.json"
-        },
-        {
-          "number": 179,
-          "title": "Community Adaptation: Comprehensive support for Chinese Job Boards (BOSS Zhipin, Liepin)"
-        },
-        {
-          "number": 111,
-          "title": "Proposal: /career-ops update command with diff preview and compatibility check"
+          "number": 45,
+          "title": "Optimize database query performance on startup",
+          "created_at": "2026-05-27T06:35:29.427Z",
+          "updated_at": "2026-05-27T06:35:29.427Z"
+        },
+        {
+          "number": 67,
+          "title": "Implement dark mode theme selection in settings dashboard",
+          "created_at": "2026-05-25T06:35:29.427Z",
+          "updated_at": "2026-05-25T06:35:29.427Z"
+        },
+        {
+          "number": 23,
+          "title": "Resolve memory leak in WebSockets connection listener",
+          "created_at": "2026-05-10T06:35:29.427Z",
+          "updated_at": "2026-05-12T06:35:29.427Z"
+        },
+        {
+          "number": 34,
+          "title": "Add missing unit tests for release notes generator utility",
+          "created_at": "2026-04-15T06:35:29.427Z",
+          "updated_at": "2026-04-20T06:35:29.427Z"
+        },
+        {
+          "number": 89,
+          "title": "Fix duplicate key console warning on Sidebar items render",
+          "created_at": "2026-05-28T06:35:29.427Z",
+          "updated_at": "2026-05-28T06:35:29.427Z"
+        }
+      ],
+      "duplicates": [],
+      "pull_requests": [
+        {
+          "number": 46,
+          "title": "fix: improve matching algorithm for #45",
+          "body": "Resolves #45 by refining the exact validation routines.",
+          "state": "open",
+          "created_at": "2026-05-29T06:35:29.427Z",
+          "updated_at": "2026-05-29T06:35:29.427Z",
+          "html_url": "https://github.com/santifer/career-ops/pull/46",
+          "user__login": "kpranayk78-ship-it"
+        },
+        {
+          "number": 68,
+          "title": "feat: add robust pipeline handlers (#67)",
+          "body": "Implements the requested core handlers for #67 seamlessly.",
+          "state": "open",
+          "created_at": "2026-05-28T06:35:29.428Z",
+          "updated_at": "2026-05-28T06:35:29.428Z",
+          "html_url": "https://github.com/santifer/career-ops/pull/68",
+          "user__login": "sivajisnehith"
+        }
+      ],
+      "pr_tracker": [
+        {
+          "number": 45,
+          "title": "Optimize database query performance on startup",
+          "status": "Has PR #46",
+          "prNumber": 46,
+          "prUrl": "https://github.com/santifer/career-ops/pull/46",
+          "analysis": "Mapped via pattern match: PR #46 references this issue number.",
+          "created_at": "2026-05-27T06:35:29.427Z",
+          "updated_at": "2026-05-27T06:35:29.427Z"
+        },
+        {
+          "number": 67,
+          "title": "Implement dark mode theme selection in settings dashboard",
+          "status": "Has PR #68",
+          "prNumber": 68,
+          "prUrl": "https://github.com/santifer/career-ops/pull/68",
+          "analysis": "Mapped via pattern match: PR #68 references this issue number.",
+          "created_at": "2026-05-25T06:35:29.427Z",
+          "updated_at": "2026-05-25T06:35:29.427Z"
+        },
+        {
+          "number": 23,
+          "title": "Resolve memory leak in WebSockets connection listener",
+          "status": "Stalled",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "No matching PR references #23. Status calculated based on issue age.",
+          "created_at": "2026-05-10T06:35:29.427Z",
+          "updated_at": "2026-05-12T06:35:29.427Z"
+        },
+        {
+          "number": 34,
+          "title": "Add missing unit tests for release notes generator utility",
+          "status": "Abandoned",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "No matching PR references #34. Status calculated based on issue age.",
+          "created_at": "2026-04-15T06:35:29.427Z",
+          "updated_at": "2026-04-20T06:35:29.427Z"
+        },
+        {
+          "number": 89,
+          "title": "Fix duplicate key console warning on Sidebar items render",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "No matching PR references #89. Status calculated based on issue age.",
+          "created_at": "2026-05-28T06:35:29.427Z",
+          "updated_at": "2026-05-28T06:35:29.427Z"
+        }
+      ]
+    }
+  },
+  "ferd/recon": {
+    "timestamp": 1780127743457,
+    "data": {
+      "total_open_issues_analyzed": 9,
+      "open_issues": [
+        {
+          "number": 114,
+          "title": "need to switch the variable name for Init & Cur?",
+          "body": "https://github.com/ferd/recon/blob/98d0c80cbab050d7cd710e74fb751aad0b2bd468/src/recon_lib.erl#L95",
+          "created_at": "2024-10-10T08:45:03Z",
+          "updated_at": "2024-10-11T13:47:50Z"
+        },
+        {
+          "number": 108,
+          "title": "`recon:node_stats` - Issue in number of reductions",
+          "body": "The function `node_stats(N, Interval, FoldFun, Init)` has an issue with the returned number of reductions. This is because `erlang:statistics(reductions)` returns a tuple with `{Total, Count_since_last_call}` but those calls are global. \r\n\r\n`recon` relies on calling this function twice and using the count, but if any other process in the same VM calls `erlang:statistics(reductions)`, then the returned number is much lower than the real number.\r\n\r\nYou can see it for instance calling `recon:node_stats_list(1, 1000)` in a task and, just before one second has passed, call `erlang:statistics(reductions)` manually. Alternatively, call `recon:node_stats_list(1, 1000)` twice, concurrently: one of the two stats will have a very very low number of reductions.\r\n\r\nProbably reductions should instead be computed as delta between the `Total` (first element).",
+          "created_at": "2023-09-21T10:38:46Z",
+          "updated_at": "2023-09-22T15:32:32Z"
+        },
+        {
+          "number": 105,
+          "title": "recon_trace:calls - no output on OTP26",
+          "body": "When using `recon_trace:calls`, I don't get any (meaningful) output on OTP26. Empty lines are printed for every function call, but I can't see the actual trace output:\r\n\r\n```\r\n$ rebar3 shell\r\n===> Verifying dependencies...\r\n===> Analyzing applications...\r\n===> Compiling recon\r\nErlang/OTP 26 [erts-14.0] [source] [64-bit] [smp:10:10] [ds:10:10:10] [async-threads:1] [jit] [dtrace]\r\n\r\nEshell V14.0 (press Ctrl+G to abort, type help(). for help)\r\n1> recon_trace:calls({lists, seq, return_trace}, 10).\r\n2\r\n2> [lists:seq(1, X) || X <- [1, 2, 3]].\r\n[[1],[1,2],[1,2,3]]\r\n\r\n\r\n\r\n\r\n\r\n\r\n3>\r\n```\r\n\r\nOn OTP25, everything works as expected:\r\n```\r\n1> recon_trace:calls({lists, seq, return_trace}, 10).\r\n2\r\n2> [lists:seq(1, X) || X <- [1, 2, 3]].\r\n\r\n11:9:45.591208 <0.94.0> lists:seq(1, 1)\r\n[[1],[1,2],[1,2,3]]\r\n\r\n11:9:45.591826 <0.94.0> lists:seq/2 --> [1]\r\n\r\n11:9:45.592098 <0.94.0> lists:seq(1, 2)\r\n\r\n11:9:45.592347 <0.94.0> lists:seq/2 --> [1,2]\r\n\r\n11:9:45.592612 <0.94.0> lists:seq(1, 3)\r\n\r\n11:9:45.592785 <0.94.0> lists:seq/2 --> [1,2,3]\r\n```",
+          "created_at": "2023-05-25T09:10:22Z",
+          "updated_at": "2023-05-25T23:07:10Z"
+        },
+        {
+          "number": 104,
+          "title": "recon_alloc memory function returns memory used more than physical memory of the VM",
+          "body": "```\r\nrecon_alloc:set_unit(gigabyte).\r\nrecon_alloc:memory(used, max).\r\n397.1961054801941\r\nrecon_alloc:memory(allocated, max).\r\n411.4017143249512\r\n```\r\n```\r\nfree -h\r\n               total        used        free      shared  buff/cache   available\r\nMem:            98Gi        71Gi        14Gi       419Mi        11Gi        24Gi\r\nSwap:             0B          0B          0B\r\n```\r\n",
+          "created_at": "2023-04-24T08:14:55Z",
+          "updated_at": "2023-04-24T17:18:07Z"
+        },
+        {
+          "number": 98,
+          "title": "app_deps.erl enhancements",
+          "body": "@ferd would it be possible to add `ebin` directories under `_checkouts` to `script/app_deps.erl`?\r\n```erlang\r\nmain(_) ->\r\n    AppFiles = filelib:wildcard(\"deps/*/ebin/*.app\")\r\n               ++\r\n               filelib:wildcard(\"apps/*/ebin/*.app\")\r\n               ++\r\n               filelib:wildcard(\"ebin/*.app\")\r\n               ++\r\n               filelib:wildcard(\"_build/default/lib/*/ebin/*.app\")\r\n               ++\r\n               filelib:wildcard(\"_checkouts/*/ebin/*.app\"), %% _checkouts\r\n    to_graphviz(read_deps(AppFiles)).\r\n```",
+          "created_at": "2022-04-06T07:22:03Z",
+          "updated_at": "2022-04-07T08:11:58Z"
+        },
+        {
+          "number": 89,
+          "title": "Newbie question",
+          "body": "How do I incorporate it with my app? I have an existing app, which I connect to with remsh, and i want to make use of recon to introspect it. I've tried copying the beam files to my lib, but cannot execute any recon functions from the remote shell... would be great if we can add some docs to explain how to incorporate it to any generic app.",
+          "created_at": "2021-03-29T02:06:18Z",
+          "updated_at": "2021-03-29T12:35:14Z"
+        },
+        {
+          "number": 75,
+          "title": "Map filtering breaks some output",
+          "body": "I don't have some precise example here because they happened while recording my advent of code videos, but it looks like some maps I filter make tuple printing turn into  `{X, Y,},` and there's some trailing condition in the map printer that probably needs fixing.",
+          "created_at": "2019-12-19T12:35:11Z",
+          "updated_at": "2019-12-19T12:35:11Z"
+        },
+        {
+          "number": 56,
+          "title": "Would atom table dumping be useful for recon?",
+          "body": "See the second answer here\r\nhttp://stackoverflow.com/questions/13480462/erlang-can-i-get-a-list-of-all-currently-registered-atoms\r\nIt's a neat trick which could of course break an any point, but I could imagine something which captured the current count, paused, then captured again helping out in the cases where you are programmatically creating atoms (or something is), and you don't know what.\r\n\r\nAssumably, the system might first crash with full atom tables or something like that, they you start up with recon and see what's growing the table?  At least that's a use-case I could imagine.\r\n\r\nWhat do you think?",
+          "created_at": "2017-04-14T00:05:28Z",
+          "updated_at": "2017-04-14T20:45:46Z"
+        },
+        {
+          "number": 55,
+          "title": "recon_alloc:memory(usage) > 1 ?",
+          "body": "In 38 of 4258 cases, the result of this call is greater than 1. What can be the cause? The maximum value is 32.13506572.",
+          "created_at": "2017-02-01T12:37:25Z",
+          "updated_at": "2017-02-01T15:40:12Z"
         }
       ],
       "duplicates": [
         {
-          "master_issue": 721,
-          "master_title": "merge-tracker.mjs roleFuzzyMatch still over-matches: parenthetical location qualifiers + short domain acronyms cause silent data loss",
-          "duplicate_issue": 751,
-          "duplicate_title": "merge-tracker: fuzzy dedupe incorrectly matches different teams sharing a product brand (e.g. UberEats Feed vs Consumer Fulfillment)",
-          "confidence": 98,
-          "reason": "Both issues report the same core bug in `merge-tracker.mjs`'s `roleFuzzyMatch` algorithm, where distinct job roles are incorrectly deduped due to similar token overlaps, leading to silent data loss in the tracker. They cite previous related fixes for the same defect pattern."
-        },
-        {
-          "master_issue": 539,
-          "master_title": "Windows compatibility + customization-layer fixes (4 P0 bugs found in real-world hunt)",
-          "duplicate_issue": 583,
-          "duplicate_title": "Batch workers don't read modes/_profile.md (interactive modes do)",
-          "confidence": 99,
-          "reason": "Issue #539 comprehensively lists multiple critical bugs related to Windows compatibility and batch processing, including 'P0a — `batch/batch-prompt.md` doesn't read `modes/_profile.md`', which is the sole focus of issue #583. Therefore, #583 is a specific instance of a bug already covered in #539."
-        },
-        {
-          "master_issue": 238,
-          "master_title": "Feature: Persistent portal sessions with auto-login (like linkedin-mcp-server)",
-          "duplicate_issue": 515,
-          "duplicate_title": "RFC / Architectual Decision: Authenticated Portal Scanning, Storing Browser Profiles",
-          "confidence": 95,
-          "reason": "Issue #515 provides a detailed architectural and implementation proposal for 'Authenticated Portal Scanning, Storing Browser Profiles' using persistent sessions, which is the core feature requested and described in issue #238, making #515 the proposed solution/design for #238."
-        },
-        {
-          "master_issue": 322,
-          "master_title": "Add Workday portal job application support",
-          "duplicate_issue": 533,
-          "duplicate_title": "Add Workday API support to scan.mjs",
+          "master_issue": 104,
+          "master_title": "recon_alloc memory function returns memory used more than physical memory of the VM",
+          "duplicate_issue": 55,
+          "duplicate_title": "recon_alloc:memory(usage) > 1 ?",
           "confidence": 90,
-          "reason": "Issue #533 proposes adding specific Workday API scanning capabilities to `scan.mjs`, which is a necessary foundational step towards the broader goal of providing full Workday portal job application support as requested in issue #322."
+          "reason": "Both issues report recon_alloc:memory returning unexpected and excessively high memory values. Issue #104 shows values far exceeding physical memory, while Issue #55 questions 'usage > 1', implying an expected ratio, indicating a common underlying bug in memory calculation or interpretation."
+        }
+      ],
+      "pull_requests": [
+        {
+          "number": 117,
+          "title": "Test suite for recon_trace:calls",
+          "body": "I think coverage of  this module will do not do harm.\r\nScope based on based on https://ferd.github.io/recon/recon_trace.html#calls/3\r\nI did not figured out how to process suite in ct to transform shellfuns so I do it dirty with dbg:fun2ms\r\nI hope you like it.\r\nBest regards\r\nMathias Green",
+          "state": "open",
+          "created_at": "2025-04-19T12:07:48Z",
+          "updated_at": "2025-08-23T14:14:02Z",
+          "html_url": "https://github.com/ferd/recon/pull/117",
+          "user__login": "flmath"
         },
         {
-          "master_issue": 266,
-          "master_title": "Fallback URL search for tracked companies on 410/404",
-          "duplicate_issue": 673,
-          "duplicate_title": "feat: search-tavily.mjs — Tavily search/extract as shared utility (liveness fallback + company research + job scan)",
-          "confidence": 92,
-          "reason": "Issue #673 proposes a new `search-tavily.mjs` utility, which explicitly lists providing 'Liveness fallback' as one of its capabilities, directly addressing the need for a fallback URL search mechanism described in issue #266 for handling 410/404 job posting statuses."
+          "number": 116,
+          "title": "Support recon:info(Pid, {dictionary, Key}) introduced in OTP 26.2",
+          "body": "Keeping the function clause generic so that dialyzer does not complain\r\non older versions where the second arg of `erlang:process_info/2` must be\r\nan atom or list.",
+          "state": "open",
+          "created_at": "2025-03-23T23:08:22Z",
+          "updated_at": "2025-04-02T12:22:49Z",
+          "html_url": "https://github.com/ferd/recon/pull/116",
+          "user__login": "gomoripeti"
+        }
+      ],
+      "pr_tracker": [
+        {
+          "number": 114,
+          "title": "need to switch the variable name for Init & Cur?",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "This issue highlights a potential variable naming confusion in recon_lib.erl. No directly related pull request exists to address this specific concern. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2024-10-10T08:45:03Z",
+          "updated_at": "2024-10-11T13:47:50Z"
         },
         {
-          "master_issue": 574,
-          "master_title": "CLAUDE.md \"Offer Verification\" mandates Playwright-first, which contradicts scan.mjs zero-token JSON-API approach",
-          "duplicate_issue": 750,
-          "duplicate_title": "Apply mode has no liveness gate — unconfirmed pipeline roles generate wasted application materials",
-          "confidence": 90,
-          "reason": "Issue #750 highlights the problem of `apply` mode lacking a liveness gate and suggests running `check-liveness.mjs`. Issue #574 addresses the fundamental accuracy and efficiency of the liveness verification process itself (e.g., preferring JSON APIs over Playwright). Resolving #574 would directly improve the effectiveness of the solution proposed in #750."
+          "number": 108,
+          "title": "`recon:node_stats` - Issue in number of reductions",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "Describes a bug where recon:node_stats incorrectly calculates reductions due to the global nature of erlang:statistics(reductions). No pull request directly addresses this specific bug. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2023-09-21T10:38:46Z",
+          "updated_at": "2023-09-22T15:32:32Z"
         },
         {
-          "master_issue": 522,
-          "master_title": "Playwright MCP server not configured — browser tools unavailable, SPA job boards silently fail",
-          "duplicate_issue": 506,
-          "duplicate_title": "Batch Runner hangs if you have Playwright MCP installed",
-          "confidence": 97,
-          "reason": "Issue #522 identifies that Playwright MCP tools are not configured, leading to silent failures, and explicitly notes that fixing this configuration will reproduce the batch hanging issue described in #506. Both issues describe problems stemming from the Playwright MCP setup and its interaction with parallel processes, requiring a combined solution."
+          "number": 105,
+          "title": "recon_trace:calls - no output on OTP26",
+          "status": "Has PR #117",
+          "prNumber": 117,
+          "prUrl": "https://github.com/ferd/recon/pull/117",
+          "analysis": "This issue reports that recon_trace:calls produces no meaningful output on OTP26. PR #117, 'Test suite for recon_trace:calls', is semantically highly related as it adds tests for the module functionality described in the issue, which would be crucial for diagnosing or verifying a fix.",
+          "created_at": "2023-05-25T09:10:22Z",
+          "updated_at": "2023-05-25T23:07:10Z"
+        },
+        {
+          "number": 104,
+          "title": "recon_alloc memory function returns memory used more than physical memory of the VM",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "Reports an observation where recon_alloc:memory returns values exceeding physical memory, suggesting a possible miscalculation or interpretation. No directly related pull request addresses this. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2023-04-24T08:14:55Z",
+          "updated_at": "2023-04-24T17:18:07Z"
+        },
+        {
+          "number": 98,
+          "title": "app_deps.erl enhancements",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "Proposes an enhancement to script/app_deps.erl to include _checkouts directories for dependency scanning. No pull request directly implements this enhancement. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2022-04-06T07:22:03Z",
+          "updated_at": "2022-04-07T08:11:58Z"
+        },
+        {
+          "number": 89,
+          "title": "Newbie question",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "This is a request for documentation on how to integrate recon into an existing Erlang application for introspection. No pull request directly addresses this documentation need. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2021-03-29T02:06:18Z",
+          "updated_at": "2021-03-29T12:35:14Z"
+        },
+        {
+          "number": 75,
+          "title": "Map filtering breaks some output",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "Describes a bug where map filtering causes malformed tuple output, indicating a printing issue within recon. No directly related pull request addresses this bug. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2019-12-19T12:35:11Z",
+          "updated_at": "2019-12-19T12:35:11Z"
+        },
+        {
+          "number": 56,
+          "title": "Would atom table dumping be useful for recon?",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "This issue proposes a new feature to dump atom table information for debugging atom table growth. No pull request directly implements this suggested feature. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2017-04-14T00:05:28Z",
+          "updated_at": "2017-04-14T20:45:46Z"
+        },
+        {
+          "number": 55,
+          "title": "recon_alloc:memory(usage) > 1 ?",
+          "status": "Active",
+          "prNumber": null,
+          "prUrl": null,
+          "analysis": "Inquires about why recon_alloc:memory(usage) can return values greater than 1, suggesting potential confusion or unexpected behavior of the metric. No directly related pull request clarifies or fixes this. The status is 'Active' assuming recent activity due to the lack of date information.",
+          "created_at": "2017-02-01T12:37:25Z",
+          "updated_at": "2017-02-01T15:40:12Z"
         }
       ]
     }
