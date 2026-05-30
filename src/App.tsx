@@ -551,7 +551,7 @@ export default function App() {
                           <div>
                             <span className="text-[10px] font-bold uppercase text-[#8b949e] tracking-wider block">Scope Scanned</span>
                             <span className="text-2xl font-extrabold text-white mt-1 block">
-                              {totalAnalyzed || 139}
+                              {totalAnalyzed}
                             </span>
                             <span className="text-[10px] text-[#8b949e] mt-1 block">Total open issues retrieved</span>
                           </div>

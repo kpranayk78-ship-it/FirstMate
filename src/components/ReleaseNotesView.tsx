@@ -148,14 +148,24 @@ export default function ReleaseNotesView({ owner = 'flutter', repo = 'flutter' }
         .map((c: any) => `- ${c.commit__message.split('\n')[0]} (by ${c.commit__author__name})`)
         .join('\n');
 
-      const prompt = `Draft the release notes for version ${version} of the project ${owner}/${repo}. Here are the merged commits in this release boundary:
+      const prompt = `You are a senior software release engineer drafting official release notes for version ${version} of the project ${owner}/${repo}.
+
+Here is the list of merged commits in this release:
 ${commitListStr}
 
-Please classify these changes dynamically into:
-- 🚀 Features
-- 🐛 Bug Fixes
-- 👥 Contributors
-In premium GitHub Markdown format. Make the tone highly professional, clean, and inspiring. Do not refer to the instructions or prompt boundaries explicitly.`;
+Please generate clean, highly professional, direct, and factual release notes that are technically detailed and informative.
+
+CRITICAL FORMATTING & STYLE GUIDELINES:
+1. STRICTLY NO SYMBOLS OR EMOJIS: Do not use any emojis, icons, decorative symbols, or non-standard characters (e.g., absolutely no 🚀, 🐛, 👥, star, checkmark, or arrow icons) anywhere in the headers, bullet points, or text. Use only standard alphanumeric text and standard markdown formatting.
+2. NO MARKETING HYP OR FLOWERY LANGUAGE: Avoid grandiose claims, hyperbole, and typical AI-style marketing fluff (such as "incredibly excited to announce", "dawn of a new era", "revolutionary suite", "visionary individuals"). Keep the tone strictly technical, professional, objective, and business-focused.
+3. Start with a direct, 1-2 sentence technical summary of the release, introducing the main purpose of the version.
+4. DETAILED & INFORMATIVE BULLET POINTS: Do not use brief, single-phrase bullet points (such as "Implemented AI Copilot"). Instead, expand each item into a detailed 1-2 sentence description explaining the technical mechanics of the change, how it was implemented, and the impact (e.g., mention specific technologies used like React state management, Express routes, child process spawns, tailwind configurations, or API integrations).
+5. Classify the changes cleanly under these standard Markdown headers:
+   ## Features
+   ## Bug Fixes
+   ## Contributors
+6. Under 'Contributors', list the contributors (names or GitHub usernames) who authored the commits in this release.
+7. Output only the release notes markdown itself. Do not mention these instructions or add any meta-commentary.`;
 
       const response = await fetch('http://localhost:3001/ai/query', {
         method: 'POST',
